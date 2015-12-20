@@ -7,12 +7,10 @@ use AppBundle\Services\DBHandler;
 class ItemsRepository {
     private $DBHandler;
     
-    /*
     public function __construct(DBHandler $DBHandler)
     {
         $this->DBHandler = $DBHandler;
     }
-    */
     
     public function findAll()
     {
