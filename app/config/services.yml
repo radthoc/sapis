@@ -1,0 +1,14 @@
+db_handler:
+        class: AppBundle\Services\DBHandler
+        arguments: ["@log", "%app.db.params%"]
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+            
+items:
+        class: AppBundle\Repository\ItemsRepository
+        arguments: ["@db_handler"]
+
+cart:
+        class: AppBundle\Repository\CartRepository
+        arguments: ["@db_handler"]
+
