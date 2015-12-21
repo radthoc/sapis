@@ -5,23 +5,40 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Repository\ItemsRepository as items;
-use AppBundle\Repository\CartRepository as cart;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShopController extends Controller
 {
     private $resource;
     private $action;
     private $params;
-    
+
     private $response_code = 200;
-    
+
     private $response_codes = [
         'OK' => 200,
         'BAD-REQUEST' => 400,
         'NOT-FOUND' => 404,
     ];
-    
+
+    private $resourcesActionMapping = [
+        'GET' => [
+            'items' => [
+                'list' => 'find'
+            ]
+        ],
+        'POST' => [
+            'items' => [
+                'save' => 'persist'
+            ]
+        ],
+        'PUT' => [
+            'cart' => [
+                'add' => 'persist'
+            ]
+        ]
+    ];
+
     /**
      * @Route("/{resource}/{action}",
      * defaults={"resource" = null, "action" = null},
@@ -29,78 +46,102 @@ class ShopController extends Controller
      */
     public function indexAction(Request $request, $resource = null, $action = null)
     {
-	$result = '';
-	
-	if (empty($resource) || empty($action))
-	{
-	    $result = 'Missing parameters';
-	    $contenType = 'text/plain';
-	    $this->response_code = $this->response_codes['BAD-REQUEST'];
-	}
+        $result = '';
+        $contentType = 'text/plain';
+
+        if (empty($resource) || empty($action))
+        {
+            $result = 'Missing parameters';
+            $this->response_code = $this->response_codes['BAD-REQUEST'];
+        }
         else
-	{
-	    $this->resource = $resource;
-	    $this->action = $action;
-	    
-	    $request = Request::createFromGlobals();
-	
-	    $method = $request->getMethod();
-	    $this->params = $request->getContent();
-	    
-	    if ($request->headers->get('content_type') == 'json')
-	    {
-		$this->params = json_decode($this->params, true);
-	    }
-	    
-	    $getResultsMethod = 'get' . ucfirst($method) . 'Results';
-	    
-	    if (method_exists($this, $getResultsMethod))
-	    {
-		try{
-		    list($result, $contentType) =  $this->$getResultsMethod();
-		}
-		catch(\Exception $e)
-		{
-		    $result = $e->getMessage();
-		    $contenType = 'text/plain';
-		    $this->response_code = $e->getCode();
-		}
-	    }
-	    else
-	    {
-		$result = 'Method not implemented';
-		$contenType = 'text/plain';
-		$this->response_code = $this->response_codes['BAD-REQUEST'];
-	    }
-	}
-        
-	$response = new Response(
+        {
+            $this->resource = $resource;
+            $this->action = $action;
+
+            $request = Request::createFromGlobals();
+
+            $method = $request->getMethod();
+            $this->params = $request->getContent();
+
+            if ($request->headers->get('content_type') == 'application/json')
+            {
+                $this->params = json_decode($this->params, true);
+            }
+
+            if ($mappedAction = $this->resourcesActionMatch($method))
+            {
+                $getResultsMethod = 'get' . ucfirst($method) . 'Results';
+
+                try
+                {
+                    list($result, $contentType) = $this->$getResultsMethod($mappedAction);
+
+                } catch (\Exception $e)
+                {
+                    $result = $e->getMessage();
+                    $contenType = 'text/plain';
+                    $this->response_code = $e->getCode();
+                }
+            }
+            else
+            {
+                $result = 'Method or action not implemented for the resource ' . $this->resource;
+                $this->response_code = $this->response_codes['BAD-REQUEST'];
+            }
+
+        }
+
+        $response = new Response(
             'Content',
             $this->response_code,
-            array('content-type' => $contentType)
+            ['content-type' => $contentType]
         );
-	
-	$response->setContent($result);
+
+        $response->setContent($result);
         $response->setStatusCode($this->response_code);
         $response->prepare($request);
-        $response->send();
+        //$response->send();
 
         return $response;
     }
-    
-    private function getPutResults()
+
+    private function resourcesActionMatch($method)
     {
-        return $this->get($this->resource)->$this->action($this->params);
+        if (array_key_exists($this->resource, $this->resourcesActionMapping[$method]))
+        {
+            if (array_key_exists($this->action, $this->resourcesActionMapping[$method][$this->resource]))
+            {
+                return $this->resourcesActionMapping[$method][$this->resource][$this->action];
+            }
+        }
+
+        return false;
     }
-    
-    private function getPostResults()
+
+    private function getPutResults($action)
     {
-        return $this->get($this->resource)->$this->action($this->params);
-    }    
-    
-    private function getGetResults()
+        if (empty($this->params))
+        {
+            throw new \Exception("Missing parameters", 400);
+        }
+
+        return $this->get($this->resource)->$action($this->params);
+    }
+
+    private function getPostResults($action)
     {
-        return $this->get($this->resource)->$this->action();
+        if (empty($this->params))
+        {
+            throw new \Exception("Missing parameters", 400);
+        }
+
+        return $this->get($this->resource)->$action($this->params);
+    }
+
+    private function getGetResults($action)
+    {
+        return $this->get($this->resource)->$action();
     }
 }
 

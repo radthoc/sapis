@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Services\DBHandler;
+use AppBundle\Service\DBHandler;
 
 class ItemsRepository {
     private $DBHandler;
@@ -12,17 +12,18 @@ class ItemsRepository {
         $this->DBHandler = $DBHandler;
     }
     
-    public function findAll()
+    public function find()
     {
-        return $this->DBHandler->findAll('items');
+        return [json_encode($this->DBHandler->findAll('items')), 'application/json'];
     }
 
-    public function save($items)
+    public function persist($items)
     {
         if ($id = array_pop($items))
         {
             return $this->DBHandler->update('items', $id, $items);
         }
+
         return $this->DBHandler->insert('items', $items);
     }
 }

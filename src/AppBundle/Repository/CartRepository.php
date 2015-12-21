@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Services\DBHandler;
+use AppBundle\Service\DBHandler;
 
 class CartRepository {
     private $DBHandler;
@@ -12,7 +12,7 @@ class CartRepository {
         $this->DBHandler = $DBHandler;
     }
     
-    public function add($row)
+    public function persist($row)
     {
         return $this->DBHandler->insert('cart', $row);
     }

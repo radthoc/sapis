@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace AppBundle\Service;
 
 class DBHandler
 {
@@ -17,17 +17,17 @@ class DBHandler
     {
         if( empty( $variables ) )
         {
-            throw new Exception("Some error message", 400);
+            throw new Exception("Missing parameters", 400);
         }
 
         return true;
     }
     
-    public function udate( $table, $id, $variables = array() )
+    public function update( $table, $id, $variables = array() )
     {
         if( empty($variables) || empty($id))
         {
-            throw new Exception("Some error message", 400);
+            throw new Exception("Missing parameters", 400);
         }
 
         return true;
