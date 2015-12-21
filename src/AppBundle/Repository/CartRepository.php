@@ -14,6 +14,6 @@ class CartRepository {
     
     public function persist($row)
     {
-        return $this->DBHandler->insert('cart', $row);
+        return $this->DBHandler->persist('cart', $row);
     }
 }

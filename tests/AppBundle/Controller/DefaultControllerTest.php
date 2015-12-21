@@ -6,6 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+    public function setUp()
+    {
+        $this->markTestSkipped(
+            'This test is still in the oven.'
+        );
+    }
+    
     public function testIndex()
     {
         $client = static::createClient();

@@ -17,13 +17,15 @@ class ItemsRepository {
         return [json_encode($this->DBHandler->findAll('items')), 'application/json'];
     }
 
-    public function persist($items)
+    public function persist(array $items)
     {
-        if ($id = array_pop($items))
+        if (array_key_exists('id', $items))
         {
-            return $this->DBHandler->update('items', $id, $items);
+            $id = $items['id'];
+            array_pop($items);
+            return $this->DBHandler->persist('items', $items, $id);
         }
 
-        return $this->DBHandler->insert('items', $items);
+        return $this->DBHandler->persist('items', $items);
     }
 }
