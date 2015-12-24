@@ -1,10 +1,10 @@
 <?php
-namespace App\Tests\Controller;
+namespace AppBundle\Tests\Controller;
 
 use GuzzleHttp\Client;
 use Mockery;
-use App\Repository\ItemsRepository;
-use App\Repository\CartRepository;
+use AppBundle\Repository\ItemsRepository;
+use AppBundle\Repository\CartRepository;
 
 class ShopControllerTest extends \PHPUnit_Framework_TestCase
 {
