@@ -43,6 +43,10 @@ class ShopController extends Controller
      * @Route("/{resource}/{action}",
      * defaults={"resource" = null, "action" = null},
      * name="shop_root")
+     * @param Request $request
+     * @param null $resource
+     * @param null $action
+     * @return Response
      */
     public function indexAction(Request $request, $resource = null, $action = null)
     {
@@ -52,7 +56,7 @@ class ShopController extends Controller
         if (empty($resource) || empty($action))
         {
             $result = 'Missing parameters';
-            $this->response_code = $this->response_codes['BAD-REQUEST'];
+            $this->response_code = $this->response_codes[ 'BAD-REQUEST' ];
         }
         else
         {
@@ -80,7 +84,7 @@ class ShopController extends Controller
                 } catch (\Exception $e)
                 {
                     $result = $e->getMessage();
-                    $contenType = 'text/plain';
+                    $contentType = 'text/plain';
                     $this->response_code = $e->getCode();
                 }
             }
@@ -89,7 +93,6 @@ class ShopController extends Controller
                 $result = 'Method or action not implemented for the resource ' . $this->resource;
                 $this->response_code = $this->response_codes['BAD-REQUEST'];
             }
-
         }
 
         $response = new Response(
@@ -131,7 +134,7 @@ class ShopController extends Controller
 
     private function getPostResults($action)
     {
-        if (empty($this->params))
+        if (empty($this->params)) 
         {
             throw new \Exception("Missing parameters", 400);
         }
@@ -144,4 +147,3 @@ class ShopController extends Controller
         return $this->get($this->resource)->$action();
     }
 }
-
