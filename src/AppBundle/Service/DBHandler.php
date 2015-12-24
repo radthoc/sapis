@@ -30,9 +30,9 @@ class DBHandler
     
     public function persist($table, array $variables, $id = null)
     {
-        if( empty($variables))
+        if (empty($variables))
         {
-            throw new Exception("Missing parameters", 400);
+            throw new \Exception("Missing parameters", 400);
         }
 
         if ($id)
