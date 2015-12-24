@@ -4,7 +4,8 @@ namespace AppBundle\Repository;
 
 use AppBundle\Service\DBHandler;
 
-class CartRepository {
+class CartRepository
+{
     private $DBHandler;
     
     public function __construct(DBHandler $DBHandler)
