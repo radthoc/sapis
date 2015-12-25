@@ -53,13 +53,10 @@ class ShopController extends Controller
         $result = '';
         $contentType = 'text/plain';
 
-        if (empty($resource) || empty($action))
-        {
+        if (empty($resource) || empty($action)) {
             $result = 'Missing parameters';
             $this->response_code = $this->response_codes[ 'BAD-REQUEST' ];
-        }
-        else
-        {
+        } else {
             $this->resource = $resource;
             $this->action = $action;
 
@@ -68,28 +65,22 @@ class ShopController extends Controller
             $method = $request->getMethod();
             $this->params = $request->getContent();
 
-            if ($request->headers->get('content_type') == 'application/json')
-            {
+            if ($request->headers->get('content_type') == 'application/json') {
                 $this->params = json_decode($this->params, true);
             }
 
-            if ($mappedAction = $this->resourcesActionMatch($method))
-            {
+            if ($mappedAction = $this->resourcesActionMatch($method)) {
                 $getResultsMethod = 'get' . ucfirst($method) . 'Results';
 
-                try
-                {
+                try {
                     list($result, $contentType) = $this->$getResultsMethod($mappedAction);
 
-                } catch (\Exception $e)
-                {
+                } catch (\Exception $e) {
                     $result = $e->getMessage();
                     $contentType = 'text/plain';
                     $this->response_code = $e->getCode();
                 }
-            }
-            else
-            {
+            } else {
                 $result = 'Method or action not implemented for the resource ' . $this->resource;
                 $this->response_code = $this->response_codes['BAD-REQUEST'];
             }
@@ -111,10 +102,8 @@ class ShopController extends Controller
 
     private function resourcesActionMatch($method)
     {
-        if (array_key_exists($this->resource, $this->resourcesActionMapping[$method]))
-        {
-            if (array_key_exists($this->action, $this->resourcesActionMapping[$method][$this->resource]))
-            {
+        if (array_key_exists($this->resource, $this->resourcesActionMapping[$method])) {
+            if (array_key_exists($this->action, $this->resourcesActionMapping[$method][$this->resource])) {
                 return $this->resourcesActionMapping[$method][$this->resource][$this->action];
             }
         }
@@ -124,8 +113,7 @@ class ShopController extends Controller
 
     private function getPutResults($action)
     {
-        if (empty($this->params))
-        {
+        if (empty($this->params)) {
             throw new \Exception("Missing parameters", 400);
         }
 
@@ -134,8 +122,7 @@ class ShopController extends Controller
 
     private function getPostResults($action)
     {
-        if (empty($this->params)) 
-        {
+        if (empty($this->params)) {
             throw new \Exception("Missing parameters", 400);
         }
 

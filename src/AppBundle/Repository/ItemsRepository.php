@@ -20,8 +20,7 @@ class ItemsRepository
 
     public function persist(array $items)
     {
-        if (array_key_exists('id', $items))
-        {
+        if (array_key_exists('id', $items)) {
             $id = $items['id'];
             array_pop($items);
             return $this->DBHandler->persist('items', $items, $id);
