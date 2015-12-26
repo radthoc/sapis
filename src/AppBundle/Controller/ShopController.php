@@ -15,12 +15,6 @@ class ShopController extends Controller
 
     private $response_code = Response::HTTP_OK;
 
-    private $response_codes = [
-        'OK' => 200,
-        'BAD-REQUEST' => 400,
-        'NOT-FOUND' => 404,
-    ];
-
     private $resourcesActionMapping = [
         'GET' => [
             'items' => [
@@ -114,7 +108,7 @@ class ShopController extends Controller
     private function getPutResults($action)
     {
         if (empty($this->params)) {
-            throw new \Exception("Missing parameters", 400);
+            throw new \Exception("Missing parameters", Response::HTTP_BAD_REQUEST);
         }
 
         return $this->get($this->resource)->$action($this->params);
@@ -123,7 +117,7 @@ class ShopController extends Controller
     private function getPostResults($action)
     {
         if (empty($this->params)) {
-            throw new \Exception("Missing parameters", 400);
+            throw new \Exception("Missing parameters", Response::HTTP_BAD_REQUEST);
         }
 
         return $this->get($this->resource)->$action($this->params);
