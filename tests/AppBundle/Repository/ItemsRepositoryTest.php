@@ -70,13 +70,7 @@ class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->itemsRepository->find();
 
-        try 
-        {
-            $this->assertEquals($expected, $result);
-        } catch (PHPUnit_Framework_ExpectationFailedException $e) 
-        {
-            echo $e->getComparisonFailure()->toString();
-        }
+        $this->assertEquals($expected, $result);
     }
 
     public function testSaveItems()

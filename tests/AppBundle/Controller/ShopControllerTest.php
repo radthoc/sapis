@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use Mockery;
 use AppBundle\Repository\ItemsRepository;
 use AppBundle\Repository\CartRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class ShopControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class ShopControllerTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->client->request('GET', 'http://localhost/app_dev.php/items/list');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
         $data = json_decode($response->getBody(), true);
 
@@ -34,7 +35,7 @@ class ShopControllerTest extends \PHPUnit_Framework_TestCase
         try {
             $response = $this->client->request('GET', '/items/save');
         } catch (Guzzle\Http\Exception\BadResponseException $e) {
-            $this->assertEquals(400, $e->getResponse()->getStatusCode());
+            $this->assertEquals(Response::HTTP_BAD_REQUEST, $e->getResponse()->getStatusCode());
         }
     }
     
@@ -43,7 +44,7 @@ class ShopControllerTest extends \PHPUnit_Framework_TestCase
         try {
             $response = $this->client->request('POST', '/cart/save');
         } catch (Guzzle\Http\Exception\BadResponseException $e) {
-            $this->assertEquals(400, $e->getResponse()->getStatusCode());
+            $this->assertEquals(Response::HTTP_BAD_REQUEST, $e->getResponse()->getStatusCode());
         }
     }
 }

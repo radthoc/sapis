@@ -13,7 +13,7 @@ class ShopController extends Controller
     private $action;
     private $params;
 
-    private $response_code = 200;
+    private $response_code = Response::HTTP_OK;
 
     private $response_codes = [
         'OK' => 200,
@@ -55,7 +55,7 @@ class ShopController extends Controller
 
         if (empty($resource) || empty($action)) {
             $result = 'Missing parameters';
-            $this->response_code = $this->response_codes[ 'BAD-REQUEST' ];
+            $this->response_code = Response::HTTP_BAD_REQUEST;
         } else {
             $this->resource = $resource;
             $this->action = $action;
@@ -82,7 +82,7 @@ class ShopController extends Controller
                 }
             } else {
                 $result = 'Method or action not implemented for the resource ' . $this->resource;
-                $this->response_code = $this->response_codes['BAD-REQUEST'];
+                $this->response_code = Response::HTTP_BAD_REQUEST;
             }
         }
 
