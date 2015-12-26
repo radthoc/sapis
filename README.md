@@ -1,4 +1,4 @@
-shop api
+Shop api
 ========
 
 Introduction
@@ -20,7 +20,7 @@ Checkout the source: git clone git://github.com/radthoc/sapis.git or dowmload th
 
 Tests
 -----
-To run the test just phpunit test suit from the root folder of the cloned repository:
+To run the tests just execute the phpunit test suit from the root folder of the cloned repository:
 ```php
 phpunit -c .
 ```
