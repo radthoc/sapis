@@ -45,9 +45,26 @@ class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
             );
         
         $expected = [
-            '[{"id":10,"name":"item 1","description":"lorem ipsum...",' .
-            '"price":8.25},{"id":20,"name":"item2","description":"lorem ipsum...",' .
-            '"price":12.59},{"id":30,"name":"item 3","description":"lorem ipsum...","price":10.9}]',
+            json_encode([
+                [
+                    'id' => 10,
+                    'name' => 'item 1',
+                    'description' => 'lorem ipsum...',
+                    'price' => 8.25
+                ],
+                [
+                    'id' => 20,
+                    'name' => 'item 2',
+                    'description' => 'lorem ipsum...',
+                    'price' => 12.59
+                ],
+                [
+                    'id' => 10,
+                    'name' => 'item 3',
+                    'description' => 'lorem ipsum...',
+                    'price' => 10.90
+                ],
+            ]),
             'application/json'
         ];
 
@@ -55,7 +72,7 @@ class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
 
         try 
         {
-            $this->assertEquals(serialize($expected), serialize($result));
+            $this->assertEquals($expected, $result);
         } catch (PHPUnit_Framework_ExpectationFailedException $e) 
         {
             echo $e->getComparisonFailure()->toString();
