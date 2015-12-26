@@ -14,8 +14,7 @@ class MYSQLiHandler implements DBWrapper
     {
         $this->params = $params;
 
-        try
-        {
+        try {
             $this->conn = [
                 $this->params['host'],
                 $this->params['usr'],
@@ -23,24 +22,21 @@ class MYSQLiHandler implements DBWrapper
                 $this->params['schema']
             ];
 
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new \Exception(self::PROCESS . ' - ' . $e->getMessage(), 500);
         }
     }
 
     public function __destruct()
     {
-        if ($this->conn)
-        {
+        if ($this->conn) {
             $this->conn = null;
         }
     }
 
     public function getRow($table, $object = false)
     {
-        if (empty($table))
-        {
+        if (empty($table)) {
             throw new \Exception(self::PROCESS . ' - getRow Invalid parameters');
         }
 
@@ -51,8 +47,7 @@ class MYSQLiHandler implements DBWrapper
 
     public function getResults($table, $params = [])
     {
-        if (empty($table))
-        {
+        if (empty($table)) {
             throw new \Exception(self::PROCESS . ' - get Results invalid parameters');
         }
 
@@ -83,8 +78,7 @@ class MYSQLiHandler implements DBWrapper
     public function insert($table, $variables)
     {
 
-        if (empty($table) || empty($variables))
-        {
+        if (empty($table) || empty($variables)) {
             throw new \Exception(self::PROCESS . '- insert invalid parameters');
         }
 
@@ -93,8 +87,7 @@ class MYSQLiHandler implements DBWrapper
 
     public function update($table, $variables, $where, $limit = '')
     {
-        if (empty($table) || empty($variables) || empty($where))
-        {
+        if (empty($table) || empty($variables) || empty($where)) {
             throw new \Exception(self::PROCESS . '- update invalid parameters');
         }
 

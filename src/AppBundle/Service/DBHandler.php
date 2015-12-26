@@ -24,8 +24,7 @@ class DBHandler
             throw new \Exception("Missing parameters", 400);
         }
 
-        if (empty($id))
-        {
+        if (empty($id)) {
             return $this->dbWrapper->insert($table, $params);
         }
         
