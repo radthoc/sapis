@@ -1,6 +1,20 @@
+
+parameters:
+        app.db.params:
+            host: %database_host%
+            usr: %database_user%
+            pwd: %database_password%
+            schema: %database_name%
+            
 services:
+        db_wrapper:
+                class: AppBundle\Persistence\MYSQLiHandler
+                interface: AppBundle\Interfaces\DBWrapper;
+                arguments: ["%app.db.params%"]
+        
         db_handler:
                 class: AppBundle\Service\DBHandler
+                arguments: ["@db_wrapper"]
 
         items:
                 class: AppBundle\Repository\ItemsRepository

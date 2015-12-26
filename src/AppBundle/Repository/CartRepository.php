@@ -6,15 +6,15 @@ use AppBundle\Service\DBHandler;
 
 class CartRepository
 {
-    private $DBHandler;
+    private $dbHandler;
     
-    public function __construct(DBHandler $DBHandler)
+    public function __construct(DBHandler $dbHandler)
     {
-        $this->DBHandler = $DBHandler;
+        $this->dbHandler = $dbHandler;
     }
     
     public function persist($row)
     {
-        return $this->DBHandler->persist('cart', $row);
+        return $this->dbHandler->persist('cart', $row);
     }
 }

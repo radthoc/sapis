@@ -75,7 +75,7 @@ class ShopController extends Controller
                 try {
                     list($result, $contentType) = $this->$getResultsMethod($mappedAction);
 
-                } catch (\Exception $e) {
+                } catch (\Exception $e) {echo $e->getMessage();exit;
                     $result = $e->getMessage();
                     $contentType = 'text/plain';
                     $this->response_code = $e->getCode();

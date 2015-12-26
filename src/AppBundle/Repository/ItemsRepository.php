@@ -6,16 +6,16 @@ use AppBundle\Service\DBHandler;
 
 class ItemsRepository
 {
-    private $DBHandler;
+    private $dbHandler;
     
-    public function __construct(DBHandler $DBHandler)
+    public function __construct(DBHandler $dbHandler)
     {
-        $this->DBHandler = $DBHandler;
+        $this->dbHandler = $dbHandler;
     }
     
     public function find()
     {
-        return [json_encode($this->DBHandler->findAll('items')), 'application/json'];
+        return [json_encode($this->dbHandler->findAll('items')), 'application/json'];
     }
 
     public function persist(array $items)
@@ -23,9 +23,9 @@ class ItemsRepository
         if (array_key_exists('id', $items)) {
             $id = $items['id'];
             array_pop($items);
-            return $this->DBHandler->persist('items', $items, $id);
+            return $this->dbHandler->persist('items', $items, $id);
         }
 
-        return $this->DBHandler->persist('items', $items);
+        return $this->dbHandler->persist('items', $items);
     }
 }

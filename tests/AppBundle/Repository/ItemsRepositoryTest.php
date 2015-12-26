@@ -2,22 +2,23 @@
 namespace AppBundle\Tests\Repository;
 
 use AppBundle\Repository\ItemsRepository;
+use AppBundle\Service\DBHandler;
 use Mockery;
 
 class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    private $DBHandler;
+    private $dbHandler;
     private $itemsRepository;
 
     public function setUp()
     {
-        $this->DBHandler = Mockery::mock('AppBundle\Service\DBHandler');
-        $this->itemsRepository = new ItemsRepository($this->DBHandler);
+        $this->dbHandler = Mockery::mock('AppBundle\Service\DBHandler');
+        $this->itemsRepository = new ItemsRepository($this->dbHandler);
     }
 
     public function testListItems()
     {
-        $this->DBHandler->shouldReceive('findAll')
+        $this->dbHandler->shouldReceive('findAll')
             ->once()
             ->with('items')
             ->andReturn(
@@ -63,7 +64,7 @@ class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveItems()
     {
-        $this->DBHandler->shouldReceive('persist')
+        $this->dbHandler->shouldReceive('persist')
             ->once()
             ->with(
                 'items',
@@ -88,7 +89,7 @@ class ItemsRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveItemsWithId()
     {
-        $this->DBHandler->shouldReceive('persist')
+        $this->dbHandler->shouldReceive('persist')
             ->once()
             ->with(
                 'items',

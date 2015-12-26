@@ -2,22 +2,23 @@
 namespace AppBundle\Tests\Repository;
 
 use AppBundle\Repository\CartRepository;
+use AppBundle\Service\DBHandler;
 use Mockery;
 
 class CartRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    private $DBHandler;
+    private $dbHandler;
     private $cartRepository;
 
     public function setUp()
     {
-        $this->DBHandler = Mockery::mock('AppBundle\Service\DBHandler');
-        $this->cartRepository = new CartRepository($this->DBHandler);
+        $this->dbHandler = Mockery::mock('AppBundle\Service\DBHandler');
+        $this->cartRepository = new CartRepository($this->dbHandler);
     }
 
     public function testAddCart()
     {
-        $this->DBHandler->shouldReceive('persist')
+        $this->dbHandler->shouldReceive('persist')
             ->once()
             ->with(
                 'cart',
@@ -26,7 +27,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
                     'item_id' => '10'
                 ]
             )
-            ->andReturn(31);
+            ->andReturn(40);
         
         $cart = [
             'customer_id' => '14',
@@ -35,6 +36,6 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
         
         $result = $this->cartRepository->persist($cart);
         
-        $this->assertEquals(31, $result);
+        $this->assertEquals(40, $result);
     }
 }
