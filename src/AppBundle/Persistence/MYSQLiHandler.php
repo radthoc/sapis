@@ -24,7 +24,10 @@ class MYSQLiHandler implements DBWrapper
             ];
 
         } catch (Exception $e) {
-            throw new \Exception(self::PROCESS . ' - ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            throw new \Exception(
+                self::PROCESS . ' - ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -38,7 +41,10 @@ class MYSQLiHandler implements DBWrapper
     public function getRow($table, $object = false)
     {
         if (empty($table)) {
-            throw new \Exception(self::PROCESS . ' - getRow Invalid parameters', Response::HTTP_INTERNAL_SERVER_ERROR);
+            throw new \Exception(
+                self::PROCESS . ' - getRow Invalid parameters',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         $data + '';
@@ -49,7 +55,10 @@ class MYSQLiHandler implements DBWrapper
     public function getResults($table, $params = [])
     {
         if (empty($table)) {
-            throw new \Exception(self::PROCESS . ' - get Results invalid parameters', Response::HTTP_INTERNAL_SERVER_ERROR);
+            throw new \Exception(
+                self::PROCESS . ' - get Results invalid parameters',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         $rows = [
@@ -79,7 +88,10 @@ class MYSQLiHandler implements DBWrapper
     public function insert($table, $variables)
     {
         if (empty($table) || empty($variables)) {
-            throw new \Exception(self::PROCESS . '- insert invalid parameters', Response::HTTP_INTERNAL_SERVER_ERROR);
+            throw new \Exception(
+                self::PROCESS . '- insert invalid parameters',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         return $this->lastId();

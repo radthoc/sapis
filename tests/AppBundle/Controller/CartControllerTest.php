@@ -8,9 +8,10 @@ class CartControllerTest extends WebTestCase
 {
     private $client;
     
-    public function setUp(){
-        $this->markTestSkipped(
-            'This test is still in the oven.'
+    public function setUp()
+    {
+        $this->markTestIncomplete(
+          'This test is still in the oven.'
         );
         
         $this->client = static::createClient();
@@ -22,7 +23,7 @@ class CartControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         
         $this->assertEquals(
-            Response::HTTP_BAD_REQUEST, 
+            Response::HTTP_BAD_REQUEST,
             $this->client->getResponse()->getStatusCode()
         );
     }
@@ -39,7 +40,7 @@ class CartControllerTest extends WebTestCase
         );
         
         $this->assertEquals(
-            Response::HTTP_OK, 
+            Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
         );
     }
