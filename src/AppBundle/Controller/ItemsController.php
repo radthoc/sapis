@@ -26,8 +26,7 @@ class ItemsController extends Controller
 
         $method = $request->getMethod();
         
-        if ($method == 'GET')
-        {
+        if ($method == 'GET') {
             $params = $request->getContent();
 
             if ($request->headers->get('content_type') == 'application/json') {
@@ -36,14 +35,15 @@ class ItemsController extends Controller
 
             try {
                 list($result, $contentType) = $this->get($this->resource)->find($params);
-            } catch (\Exception $e) {echo $e->getMessage();exit;
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                exit;
                 $result = $e->getMessage();
                 $contentType = 'text/plain';
                 $this->response_code = $e->getCode();
             }
-        }
-        else
-        {echo ' else ';
+        } else {
+            echo ' else ';
             $result = 'Method or action not implemented for the resource ' . $this->resource;
             $this->response_code = Response::HTTP_BAD_REQUEST;
         }
@@ -77,8 +77,7 @@ class ItemsController extends Controller
 
         $method = $request->getMethod();
        
-        if ($method == 'POST')
-        {
+        if ($method == 'POST') {
             $params = $request->getContent();
 
             if ($request->headers->get('content_type') == 'application/json') {
@@ -87,14 +86,14 @@ class ItemsController extends Controller
 
             try {
                 $result = $this->get($this->resource)->persist($params);
-            } catch (\Exception $e) {echo $e->getMessage();exit;
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                exit;
                 $result = $e->getMessage();
                 $contentType = 'text/plain';
                 $this->response_code = $e->getCode();
             }
-        }
-        else
-        {
+        } else {
             $result = 'Method or action not implemented for the resource ' . $this->resource;
             $this->response_code = Response::HTTP_BAD_REQUEST;
         }

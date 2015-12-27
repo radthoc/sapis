@@ -25,8 +25,7 @@ class CartController extends Controller
 
         $method = $request->getMethod();
       
-        if ($method == 'PUT')
-        {
+        if ($method == 'PUT') {
             $params = $request->getContent();
 
             if ($request->headers->get('content_type') == 'application/json') {
@@ -40,9 +39,7 @@ class CartController extends Controller
                 $contentType = 'text/plain';
                 $this->response_code = $e->getCode();
             }
-        }
-        else
-        {
+        } else {
             $result = 'Method or action not implemented for the resource ' . $this->resource;
             $this->response_code = Response::HTTP_BAD_REQUEST;
         }
