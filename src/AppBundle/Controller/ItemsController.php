@@ -26,7 +26,7 @@ class ItemsController extends Controller
 
         $method = $request->getMethod();
         
-        if ($method)
+        if ($method == 'GET')
         {
             $params = $request->getContent();
 
@@ -77,7 +77,7 @@ class ItemsController extends Controller
 
         $method = $request->getMethod();
        
-        if ($method)
+        if ($method == 'POST')
         {
             $params = $request->getContent();
 

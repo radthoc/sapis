@@ -25,7 +25,7 @@ class CartController extends Controller
 
         $method = $request->getMethod();
       
-        if ($method)
+        if ($method == 'PUT')
         {
             $params = $request->getContent();
 
