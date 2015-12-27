@@ -18,7 +18,7 @@ class ItemsControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         
-        $crawler = $this->client->request('GET', '/items/list');
+        $this->client->request('GET', '/items/list');
 
         $this->assertTrue(
             $this->client->getResponse()->headers->contains(
@@ -35,9 +35,7 @@ class ItemsControllerTest extends WebTestCase
     
     public function testSaveItem()
     {
-        $this->client = static::createClient([], [
-            'HTTP_METHOD' => 'POST'
-        ]);
+        $this->client = static::createClient();
         
         $item = [
             'name' => 'item 4',
@@ -52,14 +50,16 @@ class ItemsControllerTest extends WebTestCase
                 $item
             )
             ->andReturn(40);
-
         
-        $crawler = $this->client->request(
+        $this->client->request(
             'POST',
             '/items/save',
             array(),
             array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            array(
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => 'phpunit'
+            ),
             '{"name":"item 13","description":"lorem ipsum... ","price":"11.41"}'
         );
         
@@ -92,13 +92,12 @@ class ItemsControllerTest extends WebTestCase
             )
             ->andReturn(1);
         
-        $crawler = $this->client->request(
+        $this->client->request(
             'POST',
             '/items/save',
+            array('{"name":"item 13","description":"lorem ipsum... ","price":"11.41","id":"30"}'),
             array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            '{"name":"item 13","description":"lorem ipsum... ","price":"11.41","id":"30"}'
+            array('CONTENT_TYPE' => 'application/json')
         );
         
         $this->assertEquals(

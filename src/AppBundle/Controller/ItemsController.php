@@ -25,9 +25,9 @@ class ItemsController extends Controller
         $request = Request::createFromGlobals();
 
         $method = $request->getMethod();
-        echo $method;
+        
         if ($method)
-        {echo ' entra ';
+        {
             $params = $request->getContent();
 
             if ($request->headers->get('content_type') == 'application/json') {
@@ -76,7 +76,7 @@ class ItemsController extends Controller
         $request = Request::createFromGlobals();
 
         $method = $request->getMethod();
-        
+       
         if ($method)
         {
             $params = $request->getContent();
