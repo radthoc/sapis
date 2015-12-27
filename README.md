@@ -24,4 +24,5 @@ To run the tests just execute the phpunit test suit from the root folder of the 
 ```php
 phpunit -c .
 ```
+In order to test your end point through the server just edit the ShopControllerTest.php (AppBundle\Tests\Controller), and remove the markTestSkipped and set the baseURL value.
 

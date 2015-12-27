@@ -13,9 +13,16 @@ class ItemsRepository
         $this->dbHandler = $dbHandler;
     }
     
-    public function find()
+    public function find($params = [])
     {
-        return [json_encode($this->dbHandler->findAll('items')), 'application/json'];
+        if (empty($params))
+        {
+            return [json_encode($this->dbHandler->findAll('items')), 'application/json'];
+        }
+        else
+        {
+            return [json_encode($this->dbHandler->find('items', $params)), 'application/json'];
+        }
     }
 
     public function persist(array $items)

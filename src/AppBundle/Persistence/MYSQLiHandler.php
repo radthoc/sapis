@@ -78,7 +78,6 @@ class MYSQLiHandler implements DBWrapper
 
     public function insert($table, $variables)
     {
-
         if (empty($table) || empty($variables)) {
             throw new \Exception(self::PROCESS . '- insert invalid parameters', Response::HTTP_INTERNAL_SERVER_ERROR);
         }

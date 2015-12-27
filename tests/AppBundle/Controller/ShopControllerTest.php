@@ -2,7 +2,6 @@
 namespace AppBundle\Tests\Controller;
 
 use GuzzleHttp\Client;
-use Mockery;
 use AppBundle\Repository\ItemsRepository;
 use AppBundle\Repository\CartRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,18 +9,23 @@ use Symfony\Component\HttpFoundation\Response;
 class ShopControllerTest extends \PHPUnit_Framework_TestCase
 {
     private $client;
-
+    private $baseURL = 'http://localhost/app_dev.php';
+    
     public function setUp()
     {
+        $this->markTestSkipped(
+            'Enable this test in order to test your servers end point'
+        );
+        
         $this->client = new Client([
-            'base_uri' => 'http://localhost/app_dev.php',
+            'base_uri' => $this->baseURL,
             'http_errors' => false
         ]);
     }
 
     public function testItemsListAction()
     {
-        $response = $this->client->request('GET', 'http://localhost/app_dev.php/items/list');
+        $response = $this->client->request('GET', $this->baseURL . '/items/list');
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
 

@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,7 +41,7 @@ class ShopController extends Controller
      * @param null $resource
      * @param null $action
      * @return Response
-     */
+     
     public function indexAction(Request $request, $resource = null, $action = null)
     {
         $result = '';
@@ -128,3 +128,4 @@ class ShopController extends Controller
         return $this->get($this->resource)->$action();
     }
 }
+*/

@@ -18,9 +18,14 @@ class DBHandler
         return $this->dbWrapper->getResults($table);
     }
     
-    public function persist($table, array $variables, $id = null)
+    public function find($table, $params)
     {
-        if (empty($variables)) {
+        return $this->dbWrapper->getResults($table, $params);
+    }
+    
+    public function persist($table, array $params, $id = null)
+    {
+        if (empty($params)) {
             throw new \Exception("Missing parameters", 400);
         }
 
