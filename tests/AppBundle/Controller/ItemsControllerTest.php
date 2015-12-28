@@ -11,11 +11,7 @@ class ItemsControllerTest extends WebTestCase
     private $dbHandler;
     
     public function setUp()
-    {
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-        
+    {        
         $this->dbHandler = Mockery::mock('AppBundle\Service\DBHandler');
     }
     
@@ -39,7 +35,11 @@ class ItemsControllerTest extends WebTestCase
     }
     
     public function testSaveItem()
-    {
+    {        
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+        
         $this->client = static::createClient();
         
         $item = [
@@ -76,6 +76,10 @@ class ItemsControllerTest extends WebTestCase
     
     public function testSaveItemWithId()
     {
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+        
         $item = [
             'name' => 'item 13',
             'description' => 'lorem ipsum... ',
