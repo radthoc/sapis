@@ -17,6 +17,7 @@ The api takes several requests with the resource/action format tight to specific
 Istallation
 -----------
 Checkout the source: git clone git://github.com/radthoc/sapis.git or dowmload the zip file, and set the db parameters in the parameters.yml file.
+Run composer install.
 
 Tests
 -----
